@@ -1,0 +1,11 @@
+fastjsonschema>=2.19,<3
+jsonschema>=4.21,<5
+numpy>=1.26,<3
+pandas>=2.2,<4
+pyarrow>=15,<25
+PyYAML>=6,<7
+tqdm>=4.66,<5
+torch>=2.2,<3
+sentence-transformers>=3.0,<6
+scikit-learn>=1.4,<2
+python-docx>=1.1,<2
