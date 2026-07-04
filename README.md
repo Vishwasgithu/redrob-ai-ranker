@@ -1,136 +1,341 @@
-# Redrob AI Ranker
+# 🚀 Redrob AI Candidate Ranker
+### AI-Powered Semantic Candidate Ranking using NLP, Semantic Search, Hybrid Scoring & Explainable AI
 
-Production-oriented semantic candidate ranking for the Redrob Data & AI Challenge. The pipeline streams and validates 100,000 profiles, represents complete career evidence with `sentence-transformers/all-mpnet-base-v2`, combines semantic and structured signals, rejects internally inconsistent profiles, and writes an automatically validated top-100 submission.
+<p align="center">
 
-## Architecture
+![Python](https://img.shields.io/badge/Python-3.11-blue?style=for-the-badge&logo=python)
+![PyTorch](https://img.shields.io/badge/PyTorch-Deep%20Learning-red?style=for-the-badge&logo=pytorch)
+![Sentence Transformers](https://img.shields.io/badge/SentenceTransformers-NLP-success?style=for-the-badge)
+![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-ML-orange?style=for-the-badge&logo=scikitlearn)
+![Status](https://img.shields.io/badge/Status-Prototype-brightgreen?style=for-the-badge)
+
+</p>
+
+---
+
+## 📌 Overview
+
+Recruiters receive thousands of applications for every role, making manual screening slow and inefficient. Traditional Applicant Tracking Systems (ATS) primarily rely on keyword matching, which often overlooks highly qualified candidates whose profiles use different terminology.
+
+**Redrob AI Candidate Ranker** is a production-inspired AI recruitment system designed to move beyond keyword matching by combining **semantic understanding**, **structured profile analysis**, and **behavioral signals** to recommend the most relevant candidates for a job description.
+
+The project is designed with scalability, explainability, and modularity in mind, making it suitable for large-scale recruitment workflows.
+
+---
+
+# 🎯 Problem Statement
+
+Traditional ATS systems struggle because they:
+
+- Depend heavily on exact keyword matching
+- Fail to understand semantic similarity
+- Ignore candidate behavioral signals
+- Cannot explain ranking decisions
+- Miss strong candidates using different wording
+
+Our goal is to build an intelligent ranking engine that evaluates candidates more like an experienced recruiter rather than a search engine.
+
+---
+
+# 💡 Solution
+
+The proposed system performs intelligent candidate ranking through a hybrid AI pipeline:
+
+- Semantic understanding of Job Descriptions
+- Candidate profile understanding
+- Skill matching
+- Experience analysis
+- Behavioral signal analysis
+- Explainable candidate recommendations
+
+Instead of searching for keywords, the system understands **meaning**.
+
+---
+
+# ✨ Key Features
+
+✅ Semantic Candidate Ranking
+
+✅ Job Description Understanding
+
+✅ Candidate Profile Parsing
+
+✅ Hybrid Ranking Engine
+
+✅ Skill Matching
+
+✅ Experience Matching
+
+✅ Behavioral Signal Analysis
+
+✅ Explainable Candidate Recommendations
+
+✅ Modular AI Pipeline
+
+✅ Scalable Architecture for 100K+ Candidate Profiles
+
+---
+
+# 🏗 System Architecture
 
 ```text
-Job description DOCX ──► requirement + skill extraction ──► embeddings
-                                                                  │
-Candidate JSONL ──► validation ──► typed records ──► preprocessing ├─► hybrid scoring
-                                                                  │        │
-Redrob signals ───────────────────────────────────────────────────┘        ▼
-                                                        stable ranking + grounded reasons
-                                                                       │
-                                                                       ▼
-                                                        outputs/submission.csv
+                    Job Description
+                           │
+                           ▼
+                Requirement Understanding
+                           │
+                           ▼
+                Candidate Data Processing
+                           │
+        ┌──────────────────┴──────────────────┐
+        ▼                                     ▼
+ Candidate Semantic Profile           Behavioral Signals
+        │                                     │
+        └──────────────────┬──────────────────┘
+                           ▼
+               Semantic Embedding Engine
+                           │
+                           ▼
+                 Hybrid Scoring Framework
+        ┌──────────┬──────────┬──────────┬──────────┐
+        ▼          ▼          ▼          ▼
+   Semantic     Skills    Experience   Behavior
+        └──────────┴──────────┴──────────┘
+                           │
+                           ▼
+                  Candidate Ranking Engine
+                           │
+                           ▼
+              Explainable Recommendation
+                           │
+                           ▼
+                   Top Ranked Candidates
 ```
 
-The candidate representation includes headline, summary, current title, all career titles and descriptions, skills, education, and certifications. JSONL records are consumed as a stream and converted immediately into compact typed records. Processed profiles and embeddings are cached with source/model fingerprints, so repeat ranking runs do not recompute unchanged work.
+---
 
-## Installation
+# ⚙️ Project Workflow
 
-Python 3.11 is required.
-
-```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
+```
+Job Description
+      ↓
+Text Preprocessing
+      ↓
+Semantic Representation
+      ↓
+Candidate Profile Construction
+      ↓
+Feature Extraction
+      ↓
+Hybrid Candidate Scoring
+      ↓
+Candidate Ranking
+      ↓
+Explainable Recommendations
 ```
 
-The first run downloads `sentence-transformers/all-mpnet-base-v2` into `models/huggingface`. After that, `--local-files-only` guarantees an offline run.
+---
 
-## Usage
+# 🧠 Proposed Hybrid Scoring Strategy
 
-Run the complete pipeline with the challenge bundle paths:
+The overall ranking score combines multiple perspectives instead of relying on a single similarity metric.
 
-```powershell
+| Component | Description |
+|------------|-------------|
+| Semantic Match | Measures semantic similarity between candidate profile and job description |
+| Skill Alignment | Matches required technical skills |
+| Experience Fit | Evaluates relevance of professional experience |
+| Behavioral Signals | Uses recruiter interaction and platform activity |
+
+Example weighting:
+
+| Score Component | Weight |
+|----------------|---------|
+| Semantic Similarity | 45% |
+| Skill Match | 20% |
+| Experience | 15% |
+| Behavioral Signals | 20% |
+
+---
+
+# 🔍 Explainable AI
+
+Instead of only producing a score, the system is designed to explain *why* a candidate is recommended.
+
+Example:
+
+```
+Candidate Score : 92.4
+
+Reason
+
+✔ Strong semantic alignment with AI Engineer role
+
+✔ Relevant Python and ML experience
+
+✔ High recruiter engagement
+
+✔ Strong profile completeness
+```
+
+---
+
+# 🧩 Technology Stack
+
+### Programming
+
+- Python
+
+### Machine Learning
+
+- PyTorch
+- Scikit-Learn
+- Sentence Transformers
+
+### Data Processing
+
+- Pandas
+- NumPy
+
+### NLP
+
+- Semantic Embeddings
+- Cosine Similarity
+- Text Preprocessing
+
+### Utilities
+
+- python-docx
+- tqdm
+- pathlib
+- logging
+
+---
+
+# 📂 Project Structure
+
+```
+redrob-ai-ranker/
+
+│
+
+├── data/
+
+├── docs/
+
+├── models/
+
+├── outputs/
+
+├── src/
+
+│   ├── load_data.py
+
+│   ├── preprocess.py
+
+│   ├── embed.py
+
+│   ├── scoring.py
+
+│   ├── ranking.py
+
+│   ├── reasoning.py
+
+│   └── utils.py
+
+│
+
+├── main.py
+
+├── requirements.txt
+
+├── README.md
+
+└── LICENSE
+```
+
+---
+
+# 🚀 Getting Started
+
+```bash
+git clone https://github.com/Vishwasgithu/redrob-ai-ranker.git
+
+cd redrob-ai-ranker
+
+pip install -r requirements.txt
+
 python main.py
 ```
 
-The command produces:
+---
 
-- `outputs/submission.csv`: exact top-100 challenge submission.
-- `outputs/ranked_candidates.parquet`: all candidates, component scores, rank, integrity factor, matched skills, and explainability JSON.
-- `outputs/cache/processed_candidates.parquet`: cached semantic profiles and structured features.
-- `outputs/cache/embeddings/`: candidate, JD, requirement, and skill embedding caches with integrity metadata.
+# 📈 Current Project Status
 
-Useful reproducibility options:
+### Completed
 
-```powershell
-python main.py --device cpu --local-files-only
-python main.py --force --batch-size 128
-python main.py --candidates data/candidates.jsonl --job-description data/job_description.docx --output outputs/submission.csv
-```
+- Dataset Analysis
+- Candidate Schema Understanding
+- Project Architecture
+- Modular Project Structure
+- Data Processing Pipeline Design
 
-`--device auto` is the default: CUDA or Apple MPS is used for embedding precomputation when available, with CPU fallback. Ranking and all structured scoring are NumPy/Pandas CPU operations. Cached reruns satisfy the offline ranking workflow without loading the transformer.
+### In Progress
 
-Validate the generated CSV independently:
+- Semantic Embedding Engine
+- Hybrid Candidate Ranking
+- Explainable AI
+- Performance Optimization
 
-```powershell
-python data/validate_submission.py outputs/submission.csv
-```
+---
 
-## Pipeline
+# 🔮 Future Roadmap
 
-1. `src/load_data.py` streams JSONL, validates against the supplied JSON Schema, creates immutable dataclasses, and reads DOCX content.
-2. `src/preprocess.py` normalizes text and skill aliases, builds complete semantic profiles, extracts experience and Redrob signals, and derives JD requirements and skills.
-3. `src/embed.py` batch-encodes candidates, the focused JD, individual requirements, and the skill vocabulary. Vectors are L2-normalized and atomically cached with SHA-256 text fingerprints.
-4. `src/scoring.py` calculates semantic, skill, experience, and behavior scores. Exact and semantic skill evidence are combined. Record consistency checks down-weight impossible career dates, contradictory duration claims, and expert-skill anomalies.
-5. `src/ranking.py` applies a stable descending sort and deterministic `candidate_id` tie-break, then exports the exact CSV contract.
-6. `src/reasoning.py` creates two-sentence maximum explanations from actual title, company, experience, skills, career text, and behavioral values.
-7. `main.py` persists full explainability, validates the CSV format and candidate membership, and prints total candidates, runtime, top candidate, and average top-100 score.
+This project is designed to evolve into a production-grade AI recruitment platform.
 
-## Scoring
+Future enhancements include:
 
-Every component is bounded to `[0, 1]` and the final score follows the required formula exactly:
+- Retrieval-Augmented Generation (RAG) for grounded recruiter explanations
+- FAISS-based vector search
+- Cross-Encoder re-ranking
+- Learning-to-Rank models
+- Multi-Agent Recruiter Assistant
+- FastAPI deployment
+- Docker containerization
+- Kubernetes deployment
+- Interactive recruiter dashboard
+- Resume ingestion API
 
-```text
-Final Score = 0.45 × Semantic
-            + 0.20 × Skill
-            + 0.15 × Experience
-            + 0.20 × Behavior
-```
+---
 
-### Semantic score
+# 📊 Engineering Highlights
 
-Cosine similarity combines the focused JD vector with the mean of the candidate's three strongest requirement-level similarities. Robust percentile normalization prevents narrow cosine ranges from collapsing score separation.
+- Modular software architecture
+- Memory-efficient processing pipeline
+- Designed for 100K+ candidate profiles
+- Production-oriented code organization
+- Explainable AI recommendations
+- Hybrid ranking methodology
+- RAG-ready architecture
+- Easily deployable as a REST API
 
-### Skill score
+---
 
-JD skills are automatically discovered from both a technical vocabulary and the candidate-pool vocabulary. Candidate skills receive exact-match credit and semantic relatedness credit from MPNet embeddings. This supports plain-language equivalents such as content matching, vector representations, and information-retrieval systems without relying on substring counts.
+# 📜 License
 
-### Experience score
+This project is intended for educational, research, and portfolio purposes.
 
-Experience evaluates the JD's flexible 5–9 year band, senior applied-AI role evidence, production delivery language, retrieval/ranking depth, and product-company exposure. The integrity factor checks career-duration consistency, current-role consistency, company founding dates, and impossible expert-skill duration patterns. It multiplies every component before the final weighted sum, preventing keyword-rich honeypots from surfacing.
+---
 
-### Behavior score
+# 👨‍💻 Author
 
-Behavior combines GitHub activity, recruiter response rate, profile completeness, recruiter saves, search appearances, interview completion, offer acceptance, open-to-work status, notice period, and relocation willingness. Missing-history sentinels are treated neutrally. Expected salary is retained as profile data but is not used for ranking.
+**Vishwas Choudhary**
 
-Each row in `ranked_candidates.parquet` includes an `explainability` dictionary containing all component scores, the final score, the data-quality factor, and matched skills.
+AI & ML | Generative AI | LLMs | Computer Vision | Applied Machine Learning
 
-## Folder structure
+GitHub:
+https://github.com/Vishwasgithu
 
-```text
-redrob-ai-ranker/
-├── data/                    # supplied candidates, schema, JD, and validator
-├── models/huggingface/      # local transformer model cache
-├── outputs/                 # submission, full ranking, and reusable caches
-├── src/
-│   ├── embed.py
-│   ├── load_data.py
-│   ├── preprocess.py
-│   ├── ranking.py
-│   ├── reasoning.py
-│   ├── scoring.py
-│   └── utils.py
-├── main.py
-├── requirements.txt
-└── README.md
-```
+---
 
-## Operational characteristics
-
-- JSONL input is streamed; raw dictionaries are not retained.
-- Embeddings are generated in batches, never with an all-pairs candidate matrix.
-- Requirement similarity is `O(candidates × requirements)` with a small fixed requirement count.
-- Skill similarity is calculated once for the unique skill vocabulary and reused by every candidate.
-- Parquet uses Zstandard compression and output writes are atomic.
-- Cache metadata prevents silent reuse with a changed dataset, model, or text input.
-- No hosted APIs or network calls are used during ranking.
-
-## Future improvements
-
-With labeled relevance judgments, the fixed hybrid weights can be replaced by a calibrated learning-to-rank model and evaluated with grouped cross-validation. Recruiter feedback could also support query-specific behavioral calibration, temporal engagement decay, and monitored embedding refresh policies. Those extensions preserve the current deterministic, offline feature pipeline while learning better interactions between its explainable components.
+⭐ If you found this project interesting, consider giving it a star.
